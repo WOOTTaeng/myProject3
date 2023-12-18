@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      width: 400px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .eye-icon {
+      position: absolute;
+      top: 35%;
+      right: 15px;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .eye-icon i {
+      font-size: 20px;
+      color: #888;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <form id="signupForm">
+    <h2>회원가입</h2>
+    <label for="username">이름:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">비밀번호:</label>
+    <div style="position: relative;">
+      <input type="password" id="password" name="password" required>
+      <div class="eye-icon" onclick="togglePassword()">
+        <i class="far fa-eye"></i>
+      </div>
+    </div>
+
+    <label for="email">이메일:</label>
+    <input type="email" id="email" name="email" required>
+
+    <button type="button" onclick="signup()">가입</button>
+  </form>
+
+  <script>
+    function signup() {
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+      var email = document.getElementById('email').value;
+
+      // 간단한 회원가입 유효성 검사 (실제로는 서버 측에서 더 강력한 검사가 이루어져야 함)
+      if (username && password.length >= 5 && isValidEmail(email)) {
+        alert('회원가입이 완료되었습니다!\n\n이름: ' + username + '\n비밀번호: ' + password + '\n이메일: ' + email);
+        
+        // 회원가입 성공 시 홈페이지로 이동
+        window.location.href = 'Homepage.html'; // 파일 이름이 Homepage.html로 가정
+        // 여기서 실제로 서버에 회원가입 정보를 전송하는 코드를 추가해야 합니다.
+      } else {
+        var errorMessage = '다음을 수정해주세요:\n';
+        if (!username) errorMessage += '- 이름을 입력하세요.\n';
+        if (password.length < 5) errorMessage += '- 비밀번호는 최소 5글자 이상이어야 합니다.\n';
+        if (!isValidEmail(email)) errorMessage += '- 올바른 이메일 주소를 입력하세요.\n';
+
+        alert(errorMessage);
+      }
+    }
+
+    function togglePassword() {
+      var passwordInput = document.getElementById('password');
+      var eyeIcon = document.querySelector('.eye-icon i');
+
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.className = 'far fa-eye-slash';
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.className = 'far fa-eye';
+      }
+    }
+
+    function isValidEmail(email) {
+      // 간단한 이메일 유효성 검사를 수행합니다.
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+  </script>
+</body>
+</html>
